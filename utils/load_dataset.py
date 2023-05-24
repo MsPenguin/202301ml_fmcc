@@ -2,10 +2,7 @@ import os
 import soundfile as sf
 import numpy as np
 
-SAMPLE_RATE = 16000
-SAMPLE_WIDTH = 2
-
-def load(dataset_path):
+def load(dataset_path, sample_rate, sample_width):
     audio_male = []  # 남성 음성 데이터
     audio_female = []  # 여성 음성 데이터
 
@@ -21,8 +18,8 @@ def load(dataset_path):
             pcm_file_path = os.path.join(root, file)
 
             # Load the audio file
-            audio, sr = sf.read(pcm_file_path, channels=1, samplerate=SAMPLE_RATE,
-                            subtype='PCM_' + str(SAMPLE_WIDTH * 8))
+            audio, sr = sf.read(pcm_file_path, channels=1, samplerate=sample_rate,
+                            subtype='PCM_' + str(sample_width * 8))
 
             # Store the audio sample and its corresponding label
             if label[0] == 'M':
