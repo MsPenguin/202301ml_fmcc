@@ -1,6 +1,5 @@
 import os
 import soundfile as sf
-import numpy as np
 
 def load(dataset_path, sample_rate, sample_width):
     audio_male = []  # 남성 음성 데이터
