@@ -14,3 +14,6 @@ main.py
 
 eval.pl
 성능 테스트
+
+ml-fmcc.pdf
+프로젝트 개요
