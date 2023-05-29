@@ -20,8 +20,8 @@ train_audio_male, train_audio_female = load_dataset.load_trainset(
 test_audio = load_dataset.load_testset(TEST_DATASET_BASE, SAMPLE_RATE, SAMPLE_WIDTH)
 
 
-# # # Step 2: Feature extraction
-# # # Extract MFCC features from the voice samples
+# Step 2: Feature extraction
+# Extract MFCC features from the voice samples
 
 train_feature_male = mfcc_feature.extract(train_audio_male, SAMPLE_RATE)
 train_feature_female = mfcc_feature.extract(train_audio_female, SAMPLE_RATE)
@@ -29,21 +29,23 @@ train_feature_female = mfcc_feature.extract(train_audio_female, SAMPLE_RATE)
 test_feature = mfcc_feature.extract(test_audio, SAMPLE_RATE)
 
 
-train_label_male = np.ones(len(train_feature_male))
-train_label_female = np.zeros(len(train_feature_female))
+train_label_male = np.ones(train_feature_male.shape[0])
+train_label_female = np.zeros(train_feature_female.shape[0])
 
-# # Concatenate positive and negative features and labels
-train_all_features = np.concatenate(train_feature_male, train_feature_female)
-train_all_labels = np.concatenate(train_label_male, train_label_female)
+# Concatenate positive and negative features and labels
+train_all_features = np.vstack((train_feature_male, train_feature_female))
+train_all_labels = np.concatenate((train_label_male, train_label_female))
 
 
-# # Initialize and train the classifier
+# Initialize and train the classifier
 classifier = SVC()
 classifier.fit(train_all_features, train_all_labels)
 
-# # Make predictions on the testing data
-y_pred = classifier.predict(test_audio)
+# Make predictions on the testing data
+y_pred = classifier.predict(test_feature)
 
-# # Calculate the accuracy of the predictions
+test_labels = np.concatenate((np.ones(len(test_feature)), np.zeros(len(test_feature))))
+
+# Calculate the accuracy of the predictions
 accuracy = accuracy_score(test_audio, y_pred)
 print("Accuracy: {:.2f}%".format(accuracy * 100))
