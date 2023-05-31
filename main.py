@@ -1,10 +1,8 @@
 import numpy as np
 from utils import load_dataset
 from utils import mfcc_feature
-from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
-from python_speech_features import mfcc
 
 SAMPLE_RATE = 16000
 SAMPLE_WIDTH = 2
@@ -43,9 +41,8 @@ classifier.fit(train_all_features, train_all_labels)
 
 # Make predictions on the testing data
 y_pred = classifier.predict(test_feature)
-
-test_labels = np.concatenate((np.ones(len(test_feature)), np.zeros(len(test_feature))))
+y_true = np.concatenate((np.zeros((500,), dtype=int),np.ones((500,), dtype=int)))
 
 # Calculate the accuracy of the predictions
-accuracy = accuracy_score(test_audio, y_pred)
+accuracy = accuracy_score(y_true, y_pred)
 print("Accuracy: {:.2f}%".format(accuracy * 100))
