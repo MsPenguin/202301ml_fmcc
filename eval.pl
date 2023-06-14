@@ -1,6 +1,6 @@
 #!/usr/bin/perl
-open(TEST,"<$ARGV[0]")||die("CANT OPNE TEST\n");
-open(TRUE,"<$ARGV[1]")||die("CANT OPNE TRUE\n");
+open(TEST,"<$ARGV[0]")||die("CANT OPEN TEST\n");
+open(TRUE,"<$ARGV[1]")||die("CANT OPEN TRUE\n");
 
 @text_true = <TRUE>;
 @text_test = <TEST>;
